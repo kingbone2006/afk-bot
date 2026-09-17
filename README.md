@@ -1,143 +1,115 @@
 # 🤖 Minecraft 24/7 AFK Bot
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Node.js-16%2B-green.svg?style=for-the-badge&logo=node.js" alt="Node.js" />
-  <img src="https://img.shields.io/badge/Library-Mineflayer-blue.svg?style=for-the-badge" alt="Mineflayer" />
-  <img src="https://img.shields.io/badge/Minecraft-Java%20Edition-red.svg?style=for-the-badge&logo=minecraft" alt="Minecraft" />
-  <img src="https://img.shields.io/badge/Deployment-VPS%20%7C%20Heroku%20%7C%20Replit-orange.svg?style=for-the-badge" alt="Deploy" />
+  <a href="README.md"><strong>🇺🇸 English (Current)</strong></a> &nbsp;|&nbsp; 
+  <a href="README_VI.md"><strong>🇻🇳 Xem bản Tiếng Việt</strong></a>
 </p>
 
-A lightweight, automated 24/7 **AFK Bot** for Minecraft Java Edition servers built with [Mineflayer](https://github.com/PrismarineJS/mineflayer). Designed to keep chunks loaded for mob grinders, automatic farms, and maintain server activity without getting kicked for being idle.
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-18+-green?logo=node.js&logoColor=white" alt="Node.js 18+" />
+  <img src="https://img.shields.io/badge/Library-Mineflayer-blue" alt="Mineflayer" />
+  <img src="https://img.shields.io/badge/Game-Minecraft_Java_Edition-388E3C?logo=minecraft&logoColor=white" alt="Minecraft" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
+</p>
+
+<p align="center">
+  <b>A lightweight, stable 24/7 Minecraft AFK bot built on Node.js and Mineflayer. Features auto-reconnect, AuthMe auto-login, anti-idle / anti-kick mechanisms, and 24/7 background deployment readiness.</b>
+</p>
 
 ---
 
-## 📑 Mục lục / Table of Contents
-- [Tính năng chính / Key Features](#-tính-năng-chính--key-features)
-- [Yêu cầu hệ thống / Requirements](#-yêu-cầu-hệ-thống--requirements)
-- [Cài đặt & Khởi chạy / Installation & Setup](#-cài-đặt--khởi-chạy--installation--setup)
-- [Cấu hình / Configuration Guide](#-cấu-hình--configuration-guide)
-- [Chạy ngầm 24/7 bằng PM2 / 24/7 with PM2](#-chạy-ngầm-247-bằng-pm2--247-with-pm2)
-- [Triển khai lên Cloud / Cloud Deployment](#-triển-khai-lên-cloud--cloud-deployment)
-- [Lưu ý / Disclaimer](#-lưu-ý--disclaimer)
+## 📖 Overview
+
+**Minecraft 24/7 AFK Bot** is an automated assistant designed to keep chunks loaded for mob farms, crop farms, and in-game economy generation on Minecraft servers. The bot automatically manages connections, logs in via chat commands, and performs subtle movements to stay active indefinitely without getting disconnected by server anti-AFK plugins.
 
 ---
 
-## 🌟 Tính năng chính / Key Features
+## ✨ Key Features
 
-- **🔄 Chống Kick AFK thông minh (Anti-AFK Engine)**:
-  - Tự động di chuyển ngẫu nhiên theo 4 hướng (`forward`, `back`, `left`, `right`).
-  - Xoay góc nhìn (Yaw & Pitch) ngẫu nhiên mô phỏng hành vi của người chơi thật.
-  - Tương tác / sử dụng vật phẩm định kỳ (`activateItem`).
-- **🔐 Hỗ trợ máy chủ Offline / Crack (AuthMe Support)**:
-  - Tự động gửi lệnh đăng ký (`/register`) và đăng nhập (`/login`) khi vào server.
-- **💀 Tự động hồi sinh (Auto-Respawn)**:
-  - Lập tức hồi sinh và tiếp tục hoạt động nếu bot bị quái vật hoặc người chơi khác hạ gục.
-- **☀️ Bỏ qua ban đêm (Auto-Night Skip)**:
-  - Tùy chọn tự động gửi lệnh `/time set day` khi trời tối (dành cho server cho phép).
-- **☁️ Sẵn sàng chạy Cloud 24/7**:
-  - Tích hợp sẵn `Procfile` để deploy dễ dàng lên Heroku, Render, Replit, VPS.
+- 🔄 **Auto-Reconnect Engine**: Automatically attempts reconnection after a configurable delay whenever disconnected by server lag, restarts, or kicks.
+- 🔐 **Auto-Login Support (AuthMe / NLogin)**: Automatically runs `/register` or `/login` upon joining cracked / offline-mode servers.
+- 🏃 **Anti-AFK & Anti-Kick Mechanism**: Simulates periodic natural actions (jumping, looking around, swinging hand) at random intervals to bypass server idle detection.
+- ⚙️ **JSON-Driven Configuration (`config.json`)**: Easily configure server IP, port, bot username, and password without modifying source code.
+- ☁️ **Cloud & 24/7 Deployment Ready**: Preconfigured with `Procfile` for Heroku / Pterodactyl panels and easily managed via `PM2`.
 
 ---
 
-## 💻 Yêu cầu hệ thống / Requirements
+## 🚀 Quick Start Guide
 
-- **Node.js**: Phiên bản `14.x`, `16.x` hoặc mới hơn (Khuyên dùng Node.js 18 LTS).
-- **npm**: Đi kèm với Node.js.
-- **Minecraft Server**: Bất kỳ máy chủ Minecraft Java Edition nào (hỗ trợ cả Online/Offline-mode).
+### 1. Prerequisites
+- [Node.js](https://nodejs.org/) (Version **16.x** or **18.x+**).
+- A valid Minecraft server address (supports Java Edition servers).
 
 ---
 
-## 🚀 Cài đặt & Khởi chạy / Installation & Setup
+### 2. Installation
 
-### Bước 1: Clone mã nguồn về máy hoặc VPS
-```bash
-git clone https://github.com/kingbone2006/afk-bot.git
-cd afk-bot
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kingbone2006/afk-bot.git
+   cd afk-bot
+   ```
 
-### Bước 2: Cài đặt các thư viện cần thiết
-```bash
-npm install
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### Bước 3: Cấu hình bot
-Mở file `config.json` bằng trình soạn thảo và chỉnh sửa thông tin server của bạn:
+---
+
+### 3. Configuration (`config.json`)
+
+Create or edit `config.json` in the root directory:
 
 ```json
 {
-    "ip": "play.yourserver.com",
-    "port": 25565,
-    "name": "AFK_Bot_Name",
-    "auto-night-skip": "false",
-    "login-enabled": "true",
-    "register-cmd": "/register matkhau123 matkhau123",
-    "login-cmd": "/login matkhau123"
+  "ip": "play.yourserver.net",
+  "port": 25565,
+  "name": "AFK_Farmer_Bot",
+  "version": "1.20.1",
+  "password": "your_secure_password"
 }
 ```
 
-### Bước 4: Khởi động bot
-```bash
-npm start
-# hoặc
-node index.js
-```
-
----
-
-## ⚙️ Hướng dẫn cấu hình (`config.json`)
-
-| Tham số / Parameter | Kiểu / Type | Ý nghĩa / Description |
+| Field | Type | Description |
 | :--- | :--- | :--- |
-| `ip` | String | Địa chỉ IP hoặc tên miền máy chủ Minecraft (VD: `mc.hypixel.net`, `localhost`). |
-| `port` | Number | Cổng kết nối của server (mặc định là `25565`). |
-| `name` | String | Tên nhân vật (In-game name) của bot khi xuất hiện trong game. |
-| `auto-night-skip` | String | `"true"` để tự động chạy `/time set day` khi đêm xuống; `"false"` để tắt. |
-| `login-enabled` | String | `"true"` nếu server yêu cầu đăng nhập bằng AuthMe (`/login`); `"false"` nếu là server Premium/Online-mode. |
-| `register-cmd` | String | Cú pháp đăng ký gửi tới server (VD: `/register matkhau matkhau`). |
-| `login-cmd` | String | Cú pháp đăng nhập gửi tới server (VD: `/login matkhau`). |
+| `ip` | String | Server IP or domain name |
+| `port` | Number | Server port (default `25565`) |
+| `name` | String | In-game bot username |
+| `version` | String | Minecraft server version (or `false` for auto-detect) |
+| `password` | String | Password for `/login <password>` |
 
 ---
 
-## ⏱️ Chạy ngầm 24/7 bằng PM2 (Khuyên dùng cho VPS)
+### 4. Running the Bot
 
-Để bot tự động hoạt động liên tục ngay cả khi bạn tắt cửa sổ SSH terminal, hãy sử dụng **PM2**:
+Run the bot directly via Node:
 
 ```bash
-# 1. Cài đặt PM2 toàn cục
+node index.js
+# Or
+npm start
+```
+
+---
+
+## 🔄 Running 24/7 in Background
+
+### Using `PM2` (Recommended on VPS / Dedicated Server):
+```bash
 npm install -g pm2
-
-# 2. Khởi động bot với PM2
-pm2 start index.js --name "minecraft-afk-bot"
-
-# 3. Cài đặt tự khởi động cùng hệ thống khi VPS reboot
-pm2 startup
+pm2 start index.js --name "mc-afk-bot"
 pm2 save
+pm2 startup
+```
 
-# 4. Xem nhật ký hoạt động / log của bot
-pm2 logs minecraft-afk-bot
-
-# 5. Dừng hoặc khởi động lại bot
-pm2 stop minecraft-afk-bot
-pm2 restart minecraft-afk-bot
+To view live bot logs:
+```bash
+pm2 logs mc-afk-bot
 ```
 
 ---
 
-## ☁️ Triển khai lên Cloud (Heroku / Replit / Render)
+## 📜 License
 
-Dự án đã có sẵn file `Procfile` chuẩn:
-```text
-worker: node index.js
-```
-
-1. Đẩy code lên GitHub repository của bạn.
-2. Kết nối repo với dịch vụ Cloud (Heroku, Render, Railway, Replit).
-3. Cấu hình biến môi trường hoặc chỉnh sửa file `config.json` tương ứng.
-4. Bật dyno / worker để bot chạy 24/7 không cần bật máy tính cá nhân.
-
----
-
-## 📄 Lưu ý / Disclaimer
-
-- Vui lòng kiểm tra kỹ nội quy (Rules) của máy chủ trước khi sử dụng bot AFK để tránh bị xử phạt (ban) nếu máy chủ nghiêm cấm bot tự động.
-- Dự án được phát triển nhằm mục đích phục vụ máy chủ cá nhân, kiểm thử chunk farm và học tập lập trình với thư viện Mineflayer.
+This project is licensed under the [MIT License](LICENSE).
